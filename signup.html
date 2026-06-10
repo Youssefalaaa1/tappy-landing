@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Start your free trial — Tappy</title>
+  <meta name="description" content="Create your Tappy business account, pick your plan, and download the app to set up your loyalty card." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="icon" href="logo.png" />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #0F0D14; --ink-2: #16131E; --ink-3: #1E1A2A;
+      --paper: #F5F3EE; --paper-2: #ECE8DF;
+      --brand: #6C47F5; --brand-bright: #8B6BFF; --brand-dim: rgba(108,71,245,0.14);
+      --mint: #34D399; --red: #F87171; --amber: #F59E0B;
+      --mist: rgba(245,243,238,0.64); --mist-dim: rgba(245,243,238,0.38);
+      --line: rgba(245,243,238,0.10);
+      --display: 'Clash Display', 'Segoe UI', sans-serif;
+      --body: 'Satoshi', -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: var(--body); background: var(--ink); color: var(--paper);
+      min-height: 100vh; line-height: 1.55;
+      background-image: radial-gradient(700px 420px at 50% -120px, rgba(108,71,245,0.18), transparent 70%);
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 99; pointer-events: none; opacity: .05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    a { color: var(--brand-bright); }
+
+    .top { display: flex; justify-content: center; padding: 30px 20px 6px; }
+    .top a { display: flex; align-items: center; text-decoration: none; }
+    .top img { height: 32px; width: auto; border-radius: 7px; background: #fff; padding: 3px 9px; }
+    .top .fallback { font-family: var(--display); font-weight: 700; font-size: 24px; color: var(--paper); }
+
+    .wrap { max-width: 460px; margin: 0 auto; padding: 18px 20px 70px; }
+
+    /* progress */
+    .prog { display: flex; align-items: center; justify-content: center; gap: 0; margin: 18px 0 30px; }
+    .pstep { display: flex; align-items: center; gap: 8px; }
+    .pdot {
+      width: 28px; height: 28px; border-radius: 50%; font-size: 13px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--ink-3); color: var(--mist-dim); border: 1.5px solid var(--line);
+      transition: all .25s ease;
+    }
+    .plabel { font-size: 13px; font-weight: 700; color: var(--mist-dim); transition: color .25s ease; }
+    .pline { width: 34px; height: 1.5px; background: var(--line); margin: 0 12px; }
+    .pstep.on .pdot { background: var(--brand); color: #fff; border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-dim); }
+    .pstep.on .plabel { color: var(--paper); }
+    .pstep.done .pdot { background: var(--mint); border-color: var(--mint); color: var(--ink); }
+    @media (max-width: 430px) { .plabel { display: none; } .pline { width: 22px; } }
+
+    .card {
+      background: var(--ink-2); border: 1px solid var(--line); border-radius: 22px;
+      padding: 30px 28px;
+      box-shadow: 0 30px 70px -30px rgba(0,0,0,0.6);
+    }
+    h1 { font-family: var(--display); font-weight: 600; font-size: 26px; letter-spacing: -0.015em; margin-bottom: 6px; }
+    .sub { font-size: 14.5px; color: var(--mist); margin-bottom: 24px; }
+
+    /* plan summary */
+    .summary {
+      border: 1px solid rgba(139,107,255,0.3); background: var(--brand-dim);
+      border-radius: 16px; padding: 16px 18px; margin-bottom: 24px;
+    }
+    .summary .s-row { display: flex; justify-content: space-between; align-items: center; }
+    .summary .s-plan { font-family: var(--display); font-weight: 600; font-size: 17px; }
+    .summary .s-price { font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--brand-bright); }
+    .summary .s-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .summary .s-detail { font-size: 12.5px; color: var(--mist); }
+    .summary .s-change { font-size: 12.5px; font-weight: 700; color: var(--brand-bright); text-decoration: none; }
+    .summary .s-trial { font-size: 12px; color: var(--mint); font-weight: 700; margin-top: 8px; }
+
+    label { display: block; font-size: 13px; font-weight: 700; color: var(--mist); margin: 0 0 7px 2px; }
+    .field { margin-bottom: 16px; }
+    input {
+      width: 100%; font-family: var(--body); font-size: 16px; color: var(--paper);
+      background: var(--ink-3); border: 1.5px solid var(--line); border-radius: 13px;
+      padding: 14px 16px; outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    input::placeholder { color: var(--mist-dim); }
+    input:focus { border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-dim); }
+
+    .btn {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px;
+      font-family: var(--body); font-weight: 700; font-size: 16px; color: #fff;
+      background: var(--brand); border: none; border-radius: 14px; padding: 16px;
+      cursor: pointer; margin-top: 6px;
+      box-shadow: 0 14px 30px -10px rgba(108,71,245,0.65);
+      transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+      text-decoration: none;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 38px -10px rgba(108,71,245,0.8); }
+    .btn:active { transform: scale(.98); }
+    .btn:disabled { opacity: .55; cursor: default; }
+    .btn.ghost { background: transparent; border: 1.5px solid rgba(245,243,238,0.22); box-shadow: none; color: var(--paper); }
+    .btn.ghost:hover { border-color: rgba(245,243,238,0.45); }
+
+    .spinner {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2.5px solid rgba(255,255,255,0.35); border-top-color: #fff;
+      animation: spin .8s linear infinite; display: none;
+    }
+    .busy .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .err {
+      display: none; font-size: 13.5px; color: var(--red); font-weight: 500;
+      background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3);
+      border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;
+    }
+    .err.show { display: block; }
+    .note {
+      font-size: 13px; color: var(--mist-dim); text-align: center; margin-top: 18px;
+    }
+    .note b { color: var(--mist); }
+
+    .pill-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13.5px; color: var(--mist);
+      background: var(--ink-3); border: 1px solid var(--line);
+      border-radius: 14px; padding: 14px 16px; margin-bottom: 20px;
+    }
+    .pill-note .pi { font-size: 17px; line-height: 1.3; }
+    .pill-note b { color: var(--paper); }
+    .pill-note.good { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.07); }
+    .pill-note.warn { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.07); }
+
+    /* success step */
+    .check-big {
+      width: 70px; height: 70px; border-radius: 50%; margin: 4px auto 20px;
+      background: rgba(52,211,153,0.12); border: 2px solid var(--mint);
+      display: flex; align-items: center; justify-content: center; font-size: 32px;
+      animation: pop-in .55s cubic-bezier(.2,1.5,.4,1);
+    }
+    @keyframes pop-in { from { transform: scale(0); } to { transform: scale(1); } }
+    .center { text-align: center; }
+    .next-steps { list-style: none; margin: 22px 0 24px; counter-reset: ns; }
+    .next-steps li {
+      counter-increment: ns; display: flex; gap: 14px; align-items: flex-start;
+      padding: 11px 0; font-size: 14.5px; color: var(--mist); text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .next-steps li:last-child { border-bottom: none; }
+    .next-steps li > span { flex: 1; min-width: 0; }
+    .next-steps li::before {
+      content: counter(ns);
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: var(--brand-dim); color: var(--brand-bright);
+      font-size: 12.5px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .next-steps b { color: var(--paper); }
+    .stores { display: flex; flex-direction: column; gap: 11px; }
+    .store-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      text-decoration: none; font-weight: 700; font-size: 15.5px;
+      padding: 15px 18px; border-radius: 14px;
+      background: var(--paper); color: var(--ink);
+      transition: transform .15s ease;
+    }
+    .store-btn:hover { transform: translateY(-2px); }
+    .store-btn.alt { background: var(--ink-3); color: var(--paper); border: 1.5px solid var(--line); }
+    .store-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .step-view { display: none; }
+    .step-view.on { display: block; animation: fade-up .45s cubic-bezier(.2,.7,.2,1); }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <div class="top">
+    <a href="index.html">
+      <img src="logo.png" alt="Tappy" onerror="this.remove(); document.getElementById('topFallback').style.display='inline';" />
+      <span class="fallback" id="topFallback" style="display:none;">Tappy</span>
+    </a>
+  </div>
+
+  <div class="wrap">
+    <!-- progress -->
+    <div class="prog">
+      <div class="pstep on" id="ps1"><div class="pdot">1</div><div class="plabel">Account</div></div>
+      <div class="pline"></div>
+      <div class="pstep" id="ps2"><div class="pdot">2</div><div class="plabel">Payment</div></div>
+      <div class="pline"></div>
+      <div class="pstep" id="ps3"><div class="pdot">3</div><div class="plabel">Get the app</div></div>
+    </div>
+
+    <!-- ============ STEP 1: ACCOUNT ============ -->
+    <div class="card step-view on" id="step1">
+      <h1>Create your business account</h1>
+      <p class="sub">You'll use this same login in the Tappy app to set up your card.</p>
+
+      <div class="summary" id="planSummary"><!-- rendered by JS --></div>
+
+      <div class="err" id="err1"></div>
+
+      <form id="signupForm" novalidate>
+        <div class="field">
+          <label for="email">Work email</label>
+          <input id="email" type="email" autocomplete="email" placeholder="you@yourbusiness.com" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="new-password" placeholder="At least 6 characters" minlength="6" required />
+        </div>
+        <button class="btn" id="signupBtn" type="submit">
+          <span class="spinner"></span><span class="btn-label">Continue →</span>
+        </button>
+      </form>
+
+      <p class="note">Already have an account? Just <b>download the app</b> and sign in — <a href="#" onclick="skipToDownload(event)">skip to download</a>.</p>
+    </div>
+
+    <!-- ============ STEP 2: PAYMENT ============ -->
+    <div class="card step-view" id="step2">
+      <h1 id="payTitle">Start your free trial</h1>
+      <p class="sub" id="paySub">14 days free — then your plan starts automatically.</p>
+
+      <div class="summary" id="planSummary2"></div>
+      <div class="err" id="err2"></div>
+      <div id="payBody"><!-- rendered by JS depending on Paddle config --></div>
+    </div>
+
+    <!-- ============ STEP 3: DOWNLOAD ============ -->
+    <div class="card step-view center" id="step3">
+      <div class="check-big">🎉</div>
+      <h1 id="doneTitle">You're in!</h1>
+      <p class="sub" id="doneSub">One last thing — grab the app to design your card and finish setup.</p>
+
+      <div id="confirmEmailNote"></div>
+
+      <ol class="next-steps">
+        <li><span><b>Download the Tappy app</b> below on your phone.</span></li>
+        <li><span>Sign in with <b id="doneEmail">your new account</b>.</span></li>
+        <li><span>Design your card, add your branches — <b>your NFC cards ship right after</b>.</span></li>
+      </ol>
+
+      <div class="stores" id="storeButtons"><!-- rendered by JS --></div>
+      <p class="note" id="storeNote"></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    /* ================= CONFIG =================
+       Supabase keys are the same public (anon) keys the mobile app ships with.
+       Paddle: leave clientToken empty until your Paddle account is approved —
+       the page then runs in FREE-TRIAL mode (account is created, payment is
+       collected in-app/later) so you can push traffic here TODAY.            */
+    const CONFIG = {
+      SUPABASE_URL: 'https://ydzwtdsbdsbrdqxrntib.supabase.co',
+      SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlkend0ZHNiZHNicmRxeHJudGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0NTIwMzksImV4cCI6MjA5NDAyODAzOX0.TxqGWKntnYmswUOby6QvFykjJ5qnxPiO0C8W0LDDKJY',
+
+      PADDLE: {
+        clientToken: '',          // e.g. 'live_abc123...' from Paddle dashboard
+        environment: 'production',// 'sandbox' while testing
+        // One base price per plan + one "extra branch" price per plan (quantity = extra branches).
+        // Fill these in after creating Products/Prices in Paddle.
+        prices: {
+          starter: { monthly: { base: '', branch: '' }, annual: { base: '', branch: '' } },
+          growth:  { monthly: { base: '', branch: '' }, annual: { base: '', branch: '' } },
+          pro:     { monthly: { base: '', branch: '' }, annual: { base: '', branch: '' } },
+        },
+      },
+
+      // Store links — fill in once the app is live.
+      IOS_URL: '',      // e.g. 'https://apps.apple.com/app/id6499999999'
+      ANDROID_URL: '',  // e.g. 'https://play.google.com/store/apps/details?id=com.youssefelgindy.tappy'
+    };
+
+    // ---- Plans: mirrors lib/plans.ts ----
+    const PLANS = {
+      starter: { name: 'Starter', base: 20, extraPerBranch: 9, minBranches: 1, maxBranches: 4 },
+      growth:  { name: 'Growth',  base: 55, extraPerBranch: 7, minBranches: 5, maxBranches: 8 },
+      pro:     { name: 'Pro',     base: 90, extraPerBranch: 5, minBranches: 9, maxBranches: null },
+    };
+    const FREE_MONTHS_ANNUAL = 2;
+
+    // ---- Selection from URL (?plan=&branches=&annual=), falling back to the
+    // localStorage stash index.html writes on CTA click (some static hosts'
+    // cleanUrls redirects drop the query string). ----
+    const qs = new URLSearchParams(location.search);
+    const sel = (() => {
+      let planQ = qs.get('plan'), branchesQ = qs.get('branches'), annualQ = qs.get('annual') === '1';
+      if (!PLANS[planQ]) {
+        try {
+          const stash = JSON.parse(localStorage.getItem('tappy_sel') || 'null');
+          // Only trust a recent stash (last hour) so stale picks don't surprise.
+          if (stash && PLANS[stash.planId] && Date.now() - (stash.at || 0) < 36e5) {
+            planQ = stash.planId; branchesQ = String(stash.branches); annualQ = !!stash.annual;
+          }
+        } catch (_) {}
+      }
+      const planId = PLANS[planQ] ? planQ : 'starter';
+      const plan = PLANS[planId];
+      const max = plan.maxBranches ?? 999;
+      const branches = Math.min(max, Math.max(plan.minBranches, parseInt(branchesQ, 10) || plan.minBranches));
+      return { planId, branches, annual: annualQ };
+    })();
+
+    function priceFor(planId, branches, annual) {
+      const p = PLANS[planId];
+      const monthly = p.base + Math.max(0, branches - p.minBranches) * p.extraPerBranch;
+      return annual ? { label: `$${(monthly * (12 - FREE_MONTHS_ANNUAL)).toLocaleString()}/yr`, monthly } : { label: `$${monthly}/mo`, monthly };
+    }
+
+    function renderSummary(elId) {
+      const p = PLANS[sel.planId];
+      const { label } = priceFor(sel.planId, sel.branches, sel.annual);
+      document.getElementById(elId).innerHTML = `
+        <div class="s-row">
+          <span class="s-plan">${p.name} plan</span>
+          <span class="s-price">${label}</span>
+        </div>
+        <div class="s-meta">
+          <span class="s-detail">${sel.branches} branch${sel.branches > 1 ? 'es' : ''} · billed ${sel.annual ? 'annually (2 months free)' : 'monthly'}</span>
+          <a class="s-change" href="index.html#pricing">Change</a>
+        </div>
+        <div class="s-trial">✓ 14-day free trial — no charge today</div>`;
+    }
+    renderSummary('planSummary');
+    renderSummary('planSummary2');
+
+    // ---- Supabase ----
+    const sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    let createdEmail = '';
+    let needsEmailConfirm = false;
+
+    // ---- Step switching ----
+    function goStep(n) {
+      [1, 2, 3].forEach(i => {
+        document.getElementById('step' + i).classList.toggle('on', i === n);
+        const ps = document.getElementById('ps' + i);
+        ps.classList.toggle('on', i === n);
+        ps.classList.toggle('done', i < n);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (n === 2) renderPayment();
+      if (n === 3) renderDownload();
+    }
+
+    function showErr(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg; el.classList.add('show');
+    }
+    function clearErr(id) { document.getElementById(id).classList.remove('show'); }
+
+    // ---- STEP 1: signup ----
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErr('err1');
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showErr('err1', 'Please enter a valid email address.');
+      if (password.length < 6) return showErr('err1', 'Password must be at least 6 characters.');
+
+      const btn = document.getElementById('signupBtn');
+      btn.disabled = true; btn.classList.add('busy');
+      btn.querySelector('.btn-label').textContent = 'Creating account…';
+
+      // Same metadata shape the mobile app writes at signup (role drives
+      // business mode); plan_* lets the app pre-fill the paywall later.
+      const { data, error } = await sb.auth.signUp({
+        email, password,
+        options: {
+          data: {
+            role: 'business',
+            plan_id: sel.planId,
+            plan_branches: sel.branches,
+            plan_annual: sel.annual,
+            source: 'web',
+          },
+        },
+      });
+
+      btn.disabled = false; btn.classList.remove('busy');
+      btn.querySelector('.btn-label').textContent = 'Continue →';
+
+      if (error) {
+        const msg = /already registered/i.test(error.message)
+          ? 'That email already has a Tappy account. Just download the app and sign in — or use a different email.'
+          : error.message;
+        return showErr('err1', msg);
+      }
+
+      createdEmail = email;
+      // If email confirmations are ON, Supabase returns a user but no session.
+      needsEmailConfirm = !data.session;
+      goStep(2);
+    });
+
+    function skipToDownload(e) {
+      e.preventDefault();
+      createdEmail = '';
+      document.getElementById('doneTitle').textContent = 'Get the Tappy app';
+      document.getElementById('doneSub').textContent = 'Download the app and sign in to manage your loyalty program.';
+      goStep(3);
+    }
+
+    // ---- STEP 2: payment (Paddle when configured, trial mode otherwise) ----
+    const paddleReady = !!CONFIG.PADDLE.clientToken;
+
+    function renderPayment() {
+      const body = document.getElementById('payBody');
+      if (!paddleReady) {
+        // FREE-TRIAL MODE — no Paddle yet. Account exists; billing happens later.
+        document.getElementById('payTitle').textContent = 'Your free trial is ready';
+        document.getElementById('paySub').textContent = 'No card needed today.';
+        body.innerHTML = `
+          <div class="pill-note good"><span class="pi">✓</span><span>
+            <b>Your 14-day free trial starts now.</b> Finish setting up in the app —
+            we'll collect payment details before your trial ends, and your NFC cards
+            ship as soon as you complete setup.</span></div>
+          <button class="btn" onclick="goStep(3)">Continue to download →</button>`;
+        return;
+      }
+      body.innerHTML = `
+        <div class="pill-note"><span class="pi">🔒</span><span>
+          Payments are processed securely by <b>Paddle</b>, our merchant of record.
+          Your trial is free for 14 days — cancel anytime before it ends and you
+          won't be charged.</span></div>
+        <button class="btn" id="payBtn" onclick="openCheckout()">
+          <span class="spinner"></span><span class="btn-label">Start trial — add payment method</span>
+        </button>
+        <button class="btn ghost" style="margin-top:12px" onclick="goStep(3)">Skip for now — pay in the app</button>`;
+    }
+
+    function openCheckout() {
+      clearErr('err2');
+      const cycle = sel.annual ? 'annual' : 'monthly';
+      const prices = CONFIG.PADDLE.prices[sel.planId]?.[cycle];
+      if (!prices?.base) return showErr('err2', 'Checkout is not configured yet — continue and pay in the app.');
+
+      const items = [{ priceId: prices.base, quantity: 1 }];
+      const extra = sel.branches - PLANS[sel.planId].minBranches;
+      if (extra > 0 && prices.branch) items.push({ priceId: prices.branch, quantity: extra });
+
+      Paddle.Checkout.open({
+        items,
+        customer: createdEmail ? { email: createdEmail } : undefined,
+        customData: { plan_id: sel.planId, plan_branches: sel.branches, plan_annual: sel.annual, email: createdEmail },
+        settings: { displayMode: 'overlay', theme: 'dark' },
+      });
+    }
+
+    if (paddleReady) {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
+      s.onload = () => {
+        if (CONFIG.PADDLE.environment === 'sandbox') Paddle.Environment.set('sandbox');
+        Paddle.Initialize({
+          token: CONFIG.PADDLE.clientToken,
+          eventCallback: (ev) => { if (ev.name === 'checkout.completed') goStep(3); },
+        });
+      };
+      document.head.appendChild(s);
+    }
+
+    // ---- STEP 3: download ----
+    function renderDownload() {
+      if (createdEmail) document.getElementById('doneEmail').textContent = createdEmail;
+
+      document.getElementById('confirmEmailNote').innerHTML = needsEmailConfirm
+        ? `<div class="pill-note warn"><span class="pi">✉️</span><span>
+             <b>Check your inbox first</b> — we sent a confirmation link to
+             <b>${createdEmail}</b>. Tap it, then sign in inside the app.</span></div>`
+        : '';
+
+      const ua = navigator.userAgent || '';
+      const isiOS = /iPhone|iPad|iPod/i.test(ua);
+      const isAndroid = /Android/i.test(ua);
+
+      const apple = `
+        <a class="store-btn" ${CONFIG.IOS_URL ? `href="${CONFIG.IOS_URL}"` : 'href="#" onclick="comingSoon(event)"'}>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Download on the App Store
+        </a>`;
+      const google = `
+        <a class="store-btn ${isiOS ? 'alt' : ''}" ${CONFIG.ANDROID_URL ? `href="${CONFIG.ANDROID_URL}"` : 'href="#" onclick="comingSoon(event)"'}>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35zm13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27zm3.35-4.31c.34.27.59.69.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31zM6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/></svg>
+          Get it on Google Play
+        </a>`;
+
+      // Lead with the visitor's own platform.
+      document.getElementById('storeButtons').innerHTML = isAndroid ? google + apple : apple + google;
+      document.getElementById('storeNote').innerHTML =
+        (CONFIG.IOS_URL || CONFIG.ANDROID_URL)
+          ? 'Open this page on your phone to install directly.'
+          : '<b>Launching soon</b> — your account is ready and waiting. We\'ll be live on both stores shortly.';
+    }
+
+    function comingSoon(e) {
+      e.preventDefault();
+      alert('Tappy is launching on the app stores very soon — your account is saved and ready. Keep an eye on your inbox!');
+    }
+  </script>
+</body>
+</html>
