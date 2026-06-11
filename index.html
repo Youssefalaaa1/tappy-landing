@@ -171,16 +171,6 @@
     .lc-top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
     .lc-biz { font-family: var(--display); font-weight: 600; font-size: 21px; color: #fff; }
     .lc-tag { font-size: 12px; color: rgba(255,255,255,0.78); margin-top: 2px; }
-    .nfc-arcs { position: relative; width: 34px; height: 34px; }
-    .nfc-arcs span {
-      position: absolute; right: 0; bottom: 0; border: 2.4px solid rgba(255,255,255,0.95);
-      border-radius: 50%; border-left-color: transparent; border-bottom-color: transparent; border-top-color: transparent;
-      transform: rotate(-45deg);
-    }
-    .nfc-arcs span:nth-child(1) { width: 12px; height: 12px; }
-    .nfc-arcs span:nth-child(2) { width: 22px; height: 22px; animation: arc-pulse 2.4s ease-out infinite .3s; }
-    .nfc-arcs span:nth-child(3) { width: 32px; height: 32px; animation: arc-pulse 2.4s ease-out infinite .6s; }
-    @keyframes arc-pulse { 0%, 100% { opacity: .35; } 30% { opacity: 1; } }
     .lc-stamps { display: flex; gap: 9px; position: relative; z-index: 1; }
     .lc-stamp {
       width: 34px; height: 34px; border-radius: 50%;
@@ -467,7 +457,6 @@
               <div class="lc-biz">Luna Bakery</div>
               <div class="lc-tag">Fresh every morning</div>
             </div>
-            <div class="nfc-arcs"><span></span><span></span><span></span></div>
           </div>
           <div class="lc-stamps">
             <div class="lc-stamp filled">✓</div>
@@ -554,7 +543,6 @@
             <div class="mini-card">
               <div class="lc-top">
                 <div class="lc-biz">Your Business</div>
-                <div class="nfc-arcs" style="transform: scale(.8)"><span></span><span></span><span></span></div>
               </div>
               <div class="lc-stamps">
                 <div class="lc-stamp filled">✓</div>
