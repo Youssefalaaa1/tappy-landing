@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Start your free trial — Tappy</title>
+  <title>Start your free trial | Tappy</title>
   <meta name="description" content="Create your Tappy business account, pick your plan, and download the app to set up your loyalty card." />
   <meta name="robots" content="noindex" />
 
@@ -58,9 +58,8 @@
     @media (max-width: 430px) { .plabel { display: none; } .pline { width: 22px; } }
 
     .card {
-      background: var(--ink-2); border: 1px solid var(--line); border-radius: 22px;
+      background: var(--ink-2); border: 1px solid var(--line); border-radius: 16px;
       padding: 30px 28px;
-      box-shadow: 0 30px 70px -30px rgba(0,0,0,0.6);
     }
     h1 { font-family: var(--display); font-weight: 600; font-size: 26px; letter-spacing: -0.015em; margin-bottom: 6px; }
     .sub { font-size: 14.5px; color: var(--mist); margin-bottom: 24px; }
@@ -82,7 +81,7 @@
     .field { margin-bottom: 16px; }
     input {
       width: 100%; font-family: var(--body); font-size: 16px; color: var(--paper);
-      background: var(--ink-3); border: 1.5px solid var(--line); border-radius: 13px;
+      background: var(--ink-3); border: 1.5px solid var(--line); border-radius: 12px;
       padding: 14px 16px; outline: none; transition: border-color .15s ease, box-shadow .15s ease;
     }
     input::placeholder { color: var(--mist-dim); }
@@ -91,13 +90,12 @@
     .btn {
       width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px;
       font-family: var(--body); font-weight: 700; font-size: 16px; color: #fff;
-      background: var(--brand); border: none; border-radius: 14px; padding: 16px;
+      background: var(--brand); border: none; border-radius: 12px; padding: 16px;
       cursor: pointer; margin-top: 6px;
-      box-shadow: 0 14px 30px -10px rgba(108,71,245,0.65);
-      transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+      transition: transform .15s ease, background .15s ease, opacity .15s ease;
       text-decoration: none;
     }
-    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 38px -10px rgba(108,71,245,0.8); }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); background: var(--brand-bright); }
     .btn:active { transform: scale(.98); }
     .btn:disabled { opacity: .55; cursor: default; }
     .btn.ghost { background: transparent; border: 1.5px solid rgba(245,243,238,0.22); box-shadow: none; color: var(--paper); }
@@ -162,7 +160,7 @@
     .store-btn {
       display: flex; align-items: center; justify-content: center; gap: 10px;
       text-decoration: none; font-weight: 700; font-size: 15.5px;
-      padding: 15px 18px; border-radius: 14px;
+      padding: 15px 18px; border-radius: 12px;
       background: var(--paper); color: var(--ink);
       transition: transform .15s ease;
     }
@@ -219,13 +217,13 @@
         </button>
       </form>
 
-      <p class="note">Already have an account? Just <b>download the app</b> and sign in — <a href="#" onclick="skipToDownload(event)">skip to download</a>.</p>
+      <p class="note">Already have an account? Just <b>download the app</b> and sign in, or <a href="#" onclick="skipToDownload(event)">skip to download</a>.</p>
     </div>
 
     <!-- ============ STEP 2: PAYMENT ============ -->
     <div class="card step-view" id="step2">
       <h1 id="payTitle">Start your free trial</h1>
-      <p class="sub" id="paySub">14 days free — then your plan starts automatically.</p>
+      <p class="sub" id="paySub">14 days free, then your plan starts automatically.</p>
 
       <div class="summary" id="planSummary2"></div>
       <div class="err" id="err2"></div>
@@ -236,14 +234,14 @@
     <div class="card step-view center" id="step3">
       <div class="check-big">🎉</div>
       <h1 id="doneTitle">You're in!</h1>
-      <p class="sub" id="doneSub">One last thing — grab the app to design your card and finish setup.</p>
+      <p class="sub" id="doneSub">One last thing: grab the app to design your card and finish setup.</p>
 
       <div id="confirmEmailNote"></div>
 
       <ol class="next-steps">
         <li><span><b>Download the Tappy app</b> below on your phone.</span></li>
         <li><span>Sign in with <b id="doneEmail">your new account</b>.</span></li>
-        <li><span>Design your card, add your branches — <b>your NFC cards ship right after</b>.</span></li>
+        <li><span>Design your card, add your branches. <b>Your NFC cards ship right after.</b></span></li>
       </ol>
 
       <div class="stores" id="storeButtons"><!-- rendered by JS --></div>
@@ -327,7 +325,7 @@
           <span class="s-detail">${sel.branches} branch${sel.branches > 1 ? 'es' : ''} · billed ${sel.annual ? 'annually (2 months free)' : 'monthly'}</span>
           <a class="s-change" href="index.html#pricing">Change</a>
         </div>
-        <div class="s-trial">✓ 14-day free trial — no charge today</div>`;
+        <div class="s-trial">✓ 14-day free trial, no charge today</div>`;
     }
     renderSummary('planSummary');
     renderSummary('planSummary2');
@@ -390,7 +388,7 @@
 
       if (error) {
         const msg = /already registered/i.test(error.message)
-          ? 'That email already has a Tappy account. Just download the app and sign in — or use a different email.'
+          ? 'That email already has a Tappy account. Just download the app and sign in, or use a different email.'
           : error.message;
         return showErr('err1', msg);
       }
@@ -420,8 +418,8 @@
         document.getElementById('paySub').textContent = 'No card needed today.';
         body.innerHTML = `
           <div class="pill-note good"><span class="pi">✓</span><span>
-            <b>Your 14-day free trial starts now.</b> Finish setting up in the app —
-            we'll collect payment details before your trial ends, and your NFC cards
+            <b>Your 14-day free trial starts now.</b> Finish setting up in the app.
+            We'll collect payment details before your trial ends, and your NFC cards
             ship as soon as you complete setup.</span></div>
           <button class="btn" onclick="goStep(3)">Continue to download →</button>`;
         return;
@@ -429,19 +427,19 @@
       body.innerHTML = `
         <div class="pill-note"><span class="pi">🔒</span><span>
           Payments are processed securely by <b>Paddle</b>, our merchant of record.
-          Your trial is free for 14 days — cancel anytime before it ends and you
+          Your trial is free for 14 days. Cancel anytime before it ends and you
           won't be charged.</span></div>
         <button class="btn" id="payBtn" onclick="openCheckout()">
-          <span class="spinner"></span><span class="btn-label">Start trial — add payment method</span>
+          <span class="spinner"></span><span class="btn-label">Add payment method</span>
         </button>
-        <button class="btn ghost" style="margin-top:12px" onclick="goStep(3)">Skip for now — pay in the app</button>`;
+        <button class="btn ghost" style="margin-top:12px" onclick="goStep(3)">Skip for now, pay in the app</button>`;
     }
 
     function openCheckout() {
       clearErr('err2');
       const cycle = sel.annual ? 'annual' : 'monthly';
       const prices = CONFIG.PADDLE.prices[sel.planId]?.[cycle];
-      if (!prices?.base) return showErr('err2', 'Checkout is not configured yet — continue and pay in the app.');
+      if (!prices?.base) return showErr('err2', 'Checkout is not configured yet. Continue and pay in the app.');
 
       const items = [{ priceId: prices.base, quantity: 1 }];
       const extra = sel.branches - PLANS[sel.planId].minBranches;
@@ -474,7 +472,7 @@
 
       document.getElementById('confirmEmailNote').innerHTML = needsEmailConfirm
         ? `<div class="pill-note warn"><span class="pi">✉️</span><span>
-             <b>Check your inbox first</b> — we sent a confirmation link to
+             <b>Check your inbox first.</b> We sent a confirmation link to
              <b>${createdEmail}</b>. Tap it, then sign in inside the app.</span></div>`
         : '';
 
@@ -498,12 +496,12 @@
       document.getElementById('storeNote').innerHTML =
         (CONFIG.IOS_URL || CONFIG.ANDROID_URL)
           ? 'Open this page on your phone to install directly.'
-          : '<b>Launching soon</b> — your account is ready and waiting. We\'ll be live on both stores shortly.';
+          : '<b>Launching soon.</b> Your account is ready and waiting. We\'ll be live on both stores shortly.';
     }
 
     function comingSoon(e) {
       e.preventDefault();
-      alert('Tappy is launching on the app stores very soon — your account is saved and ready. Keep an eye on your inbox!');
+      alert('Tappy is launching on the app stores very soon. Your account is saved and ready. Keep an eye on your inbox!');
     }
   </script>
 </body>
